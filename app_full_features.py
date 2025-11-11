@@ -24,14 +24,9 @@ st.markdown(
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Make title black and remove any link */
-    .stTitle {
-        color: #000000 !important;
-        text-decoration: none !important;
-        pointer-events: none !important;
-    }
-
-    .stTitle h1 {
+    /* Force title to black and remove any link */
+    .stTitle h1, 
+    .stTitle h1 a {
         color: #000000 !important;
         text-decoration: none !important;
         pointer-events: none !important;
