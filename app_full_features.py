@@ -31,6 +31,12 @@ st.markdown(
         pointer-events: none !important;
     }
 
+    .stTitle h1 {
+        color: #000000 !important;
+        text-decoration: none !important;
+        pointer-events: none !important;
+    }
+
     /* Remove random empty box under title */
     div[data-testid="stVerticalBlock"] > div:first-child:empty {
         display: none;
