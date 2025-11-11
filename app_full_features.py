@@ -17,32 +17,26 @@ categorical_options = data["categorical_options"]
 st.markdown(
     """
     <style>
-    /* Page background and general text */
     body, .stApp {
-        background-color: #6699CC;  /* light blue */
-        color: #000000 !important;  /* all text black */
+        background-color: #6699CC;
+        color: #000000 !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Force title to black and remove any link */
-    .stTitle h1, 
-    .stTitle h1 a {
+    .stTitle h1, .stTitle h1 a {
         color: #000000 !important;
         text-decoration: none !important;
         pointer-events: none !important;
     }
 
-    /* Remove random empty box under title */
     div[data-testid="stVerticalBlock"] > div:first-child:empty {
         display: none;
     }
 
-    /* Input container styling */
     .stNumberInput, .stSelectbox, .stTextInput {
-        color: #000000;  /* text inside inputs black */
+        color: #000000;
     }
 
-    /* Button styling */
     div.stButton > button:first-child {
         background-color: #1a73e8;
         color: #ffffff;
@@ -56,7 +50,6 @@ st.markdown(
         background-color: #1558b0;
     }
 
-    /* Prediction output box */
     .prediction-box {
         background-color: #ffffff;
         padding: 20px;
@@ -69,7 +62,6 @@ st.markdown(
         margin-top: 20px;
     }
 
-    /* Ensure all labels/text outside inputs are black */
     label, div[data-testid="stMarkdownContainer"] p {
         color: #000000 !important;
     }
@@ -80,6 +72,10 @@ st.markdown(
 
 # --- Title ---
 st.title("Random Forest Predictor")
+
+# --- Sidebar link to feature explanations ---
+st.sidebar.markdown("### Navigation")
+st.sidebar.button("Feature Explanations", on_click=lambda: st.experimental_set_query_params(page="explain_features"))
 
 # --- Collect categorical inputs ---
 user_data = {}
@@ -94,15 +90,13 @@ for num_feat in numeric_features:
 
 # --- Build input DataFrame matching model features ---
 input_df = pd.DataFrame(columns=features)
-input_df.loc[0] = 0  # initialize all zeros
+input_df.loc[0] = 0
 
-# Set categorical selections
 for cat_col, choice in user_data.items():
     col_name = f"{cat_col}_{choice}"
     if col_name in input_df.columns:
         input_df.at[0, col_name] = 1
 
-# Set numeric inputs
 for num_feat, val in numeric_input.items():
     input_df.at[0, num_feat] = val
 
