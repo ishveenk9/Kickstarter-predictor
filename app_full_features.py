@@ -17,46 +17,35 @@ categorical_options = data["categorical_options"]
 st.markdown(
     """
     <style>
-    /* Remove section link anchors */
-    [data-testid="stSidebarNav"] {display: none;}
-    
-    /* Overall page styling */
+    /* Full page background */
     body, .stApp {
-        background-color: #cce7ff;  /* light blue background */
+        background-color: #cce7ff;  /* light blue */
         color: #000000;             /* all text black */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Title styling: remove extra boxes */
-    .stTitle {
-        color: #000000 !important;
-        font-size: 2.5em !important;
-        font-weight: bold !important;
-        text-align: center !important;
-        margin-bottom: 40px !important;
-        padding: 0 !important;
-        background-color: transparent !important;
+    /* Remove Streamlit extra headers and sidebar links */
+    header, [data-testid="stSidebarNav"], .css-18ni7ap {display: none;}
+
+    /* White input container */
+    .input-container {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
     }
 
-    /* Section labels and input fields */
-    label, .stTextInput, .stNumberInput, .stSelectbox {
-        font-size: 16px;
-        font-weight: 500;
-        color: #000000 !important;
-    }
-
-    /* Input containers: white background boxes */
-    .stNumberInput > div > input, 
-    .stSelectbox > div > div > div > span {
+    /* Input fields */
+    input, select {
         background-color: #ffffff !important;
-        padding: 10px !important;
-        border-radius: 8px !important;
-        border: 1px solid #ced4da !important;
-        margin-bottom: 12px !important;
         color: #000000 !important;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        margin-bottom: 12px;
     }
 
-    /* Button styling */
+    /* Button */
     div.stButton > button:first-child {
         background-color: #1a73e8;
         color: #ffffff;
@@ -69,34 +58,39 @@ st.markdown(
     }
     div.stButton > button:first-child:hover {
         background-color: #1558b0;
-        color: #ffffff;
     }
 
-    /* Prediction output box: white background */
-    .stMarkdown div {
+    /* Prediction output */
+    .prediction-box {
         background-color: #ffffff;
         padding: 20px;
-        border-radius: 10px;
-        margin-top: 20px;
+        border-radius: 12px;
+        border: 1px solid #ced4da;
         font-weight: bold;
         font-size: 20px;
-        border: 1px solid #ced4da;
-        color: #000000;
         text-align: center;
+        color: #000000;
+        margin-top: 20px;
     }
 
-    /* Remove top random box */
-    header, .css-18ni7ap {display: none;}
+    /* Custom title */
+    .app-title {
+        text-align: center;
+        font-size: 3em;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 40px;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# --- Main App Content ---
-st.title("Random Forest Predictor")
+# --- Custom HTML title (removes 3-box problem) ---
+st.markdown('<div class="app-title">Random Forest Predictor</div>', unsafe_allow_html=True)
 
-# White container for inputs
-st.markdown('<div style="background-color:#ffffff; padding:20px; border-radius:10px;">', unsafe_allow_html=True)
+# --- White container for inputs ---
+st.markdown('<div class="input-container">', unsafe_allow_html=True)
 
 # Collect categorical inputs
 user_data = {}
@@ -126,10 +120,10 @@ for num_feat, val in numeric_input.items():
 # Scale features
 user_input_scaled = scaler.transform(input_df)
 
-st.markdown('</div>', unsafe_allow_html=True)  # Close white container
+st.markdown('</div>', unsafe_allow_html=True)  # close input container
 
 # Predict button
 if st.button("Predict"):
     pred = model.predict(user_input_scaled)
     pred_label = le.inverse_transform(pred)
-    st.markdown(f"### Predicted class: {pred_label[0]}")
+    st.markdown(f'<div class="prediction-box">Predicted class: {pred_label[0]}</div>', unsafe_allow_html=True)
