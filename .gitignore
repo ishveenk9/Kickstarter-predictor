@@ -1,0 +1,19 @@
+# Virtual environments
+venv/
+env/
+__pycache__/
+*.pyc
+
+# MacOS
+.DS_Store
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Streamlit logs
+.streamlit/logs/
+
+# Optional: Jupyter notebooks checkpoints
+.ipynb_checkpoints/
