@@ -20,65 +20,73 @@ st.markdown(
     /* Remove section link anchors */
     [data-testid="stSidebarNav"] {display: none;}
     
-    /* Overall app styling */
+    /* Overall page styling */
     body, .stApp {
-        background-color: #f0f2f6;
-        color: #212529;
+        background-color: #cce7ff;  /* light blue background */
+        color: #000000;             /* all text black */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Main title styling */
+    /* Title styling: remove extra boxes */
     .stTitle {
-        color: #1a73e8;
-        font-size: 2.5em;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 30px;
+        color: #000000 !important;
+        font-size: 2.5em !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        margin-bottom: 40px !important;
+        padding: 0 !important;
+        background-color: transparent !important;
     }
 
-    /* Labels and input fields */
+    /* Section labels and input fields */
     label, .stTextInput, .stNumberInput, .stSelectbox {
         font-size: 16px;
         font-weight: 500;
-        color: #212529;
+        color: #000000 !important;
     }
 
+    /* Input containers: white background boxes */
     .stNumberInput > div > input, 
     .stSelectbox > div > div > div > span {
         background-color: #ffffff !important;
-        padding: 8px !important;
-        border-radius: 6px !important;
+        padding: 10px !important;
+        border-radius: 8px !important;
         border: 1px solid #ced4da !important;
         margin-bottom: 12px !important;
+        color: #000000 !important;
     }
 
     /* Button styling */
     div.stButton > button:first-child {
         background-color: #1a73e8;
-        color: white;
+        color: #ffffff;
         font-size: 16px;
-        padding: 10px 25px;
+        padding: 12px 25px;
         border-radius: 10px;
         border: none;
-        transition: background-color 0.3s ease;
         width: 100%;
+        transition: background-color 0.3s ease;
     }
     div.stButton > button:first-child:hover {
         background-color: #1558b0;
-        color: white;
+        color: #ffffff;
     }
 
-    /* Prediction output */
+    /* Prediction output box: white background */
     .stMarkdown div {
-        background-color: #e3f2fd;
+        background-color: #ffffff;
         padding: 20px;
         border-radius: 10px;
         margin-top: 20px;
         font-weight: bold;
         font-size: 20px;
-        border: 1px solid #1a73e8;
+        border: 1px solid #ced4da;
+        color: #000000;
         text-align: center;
     }
+
+    /* Remove top random box */
+    header, .css-18ni7ap {display: none;}
     </style>
     """,
     unsafe_allow_html=True
@@ -86,6 +94,9 @@ st.markdown(
 
 # --- Main App Content ---
 st.title("Random Forest Predictor")
+
+# White container for inputs
+st.markdown('<div style="background-color:#ffffff; padding:20px; border-radius:10px;">', unsafe_allow_html=True)
 
 # Collect categorical inputs
 user_data = {}
@@ -114,6 +125,8 @@ for num_feat, val in numeric_input.items():
 
 # Scale features
 user_input_scaled = scaler.transform(input_df)
+
+st.markdown('</div>', unsafe_allow_html=True)  # Close white container
 
 # Predict button
 if st.button("Predict"):
