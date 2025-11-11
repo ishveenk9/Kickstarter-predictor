@@ -1,4 +1,3 @@
-# app_full_features.py
 import streamlit as st
 import pickle
 import pandas as pd
@@ -13,6 +12,72 @@ scaler = data["scaler"]
 le = data["label_encoder"]
 features = data["features"]  # all features including one-hot
 categorical_options = data["categorical_options"]
+
+# --- Custom CSS ---
+st.markdown(
+    """
+    <style>
+    /* Background and font */
+    body, .stApp {
+        background-color: #f0f2f6;
+        color: #333333;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Main title */
+    .stTitle {
+        color: #1f77b4;
+        font-size: 2.5em;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Section headers */
+    h3 {
+        color: #1f77b4;
+        border-bottom: 2px solid #1f77b4;
+        padding-bottom: 5px;
+        margin-top: 25px;
+    }
+
+    /* Buttons */
+    div.stButton > button:first-child {
+        background-color: #1f77b4;
+        color: white;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    div.stButton > button:first-child:hover {
+        background-color: #105d91;
+        color: white;
+    }
+
+    /* Input fields */
+    .stNumberInput, .stSelectbox {
+        background-color: #ffffff;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #cccccc;
+    }
+
+    /* Prediction output */
+    .stMarkdown div {
+        background-color: #e6f2ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.title("Random Forest Predictor")
 
@@ -54,4 +119,4 @@ user_input_scaled = scaler.transform(input_df)
 if st.button("Predict"):
     pred = model.predict(user_input_scaled)
     pred_label = le.inverse_transform(pred)
-    st.write(f"### Predicted class: {pred_label[0]}")
+    st.markdown(f"### Predicted class: {pred_label[0]}")
