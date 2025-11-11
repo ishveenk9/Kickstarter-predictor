@@ -10,80 +10,80 @@ with open("model_full.pkl", "rb") as f:
 model = data["model"]
 scaler = data["scaler"]
 le = data["label_encoder"]
-features = data["features"]  # all features including one-hot
+features = data["features"]
 categorical_options = data["categorical_options"]
 
-# --- Custom CSS for a clean, cohesive look ---
+# --- Custom CSS for clean modern look ---
 st.markdown(
     """
     <style>
-    /* Background and font */
+    /* Overall app styling */
     body, .stApp {
-        background-color: #f8f9fa;  /* light gray */
-        color: #212529;              /* dark gray for text */
+        background-color: #f0f2f6;  /* soft gray */
+        color: #212529;              
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Main title */
+    /* Main title styling */
     .stTitle {
-        color: #0d6efd;  /* Bootstrap primary blue */
+        color: #1a73e8;  /* pleasant blue */
         font-size: 2.5em;
         font-weight: bold;
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
     /* Section headers */
     h3 {
-        color: #0d6efd;
-        border-bottom: 2px solid #0d6efd;
-        padding-bottom: 5px;
-        margin-top: 25px;
+        color: #1a73e8;
+        margin-top: 30px;
+        margin-bottom: 15px;
     }
 
     /* Buttons */
     div.stButton > button:first-child {
-        background-color: #0d6efd;
+        background-color: #1a73e8;
         color: white;
         font-size: 16px;
-        padding: 10px 20px;
-        border-radius: 8px;
+        padding: 10px 25px;
+        border-radius: 10px;
         border: none;
         transition: background-color 0.3s ease;
     }
-
     div.stButton > button:first-child:hover {
-        background-color: #0b5ed7;  /* darker blue on hover */
+        background-color: #1558b0;
         color: white;
     }
 
-    /* Input fields */
-    .stNumberInput, .stSelectbox, .stTextInput {
-        background-color: #ffffff;
-        padding: 8px;
-        border-radius: 6px;
-        border: 1px solid #ced4da;  /* subtle gray border */
-        margin-bottom: 10px;
+    /* Inputs styling */
+    .stNumberInput > div > input, .stSelectbox > div > div > div > span {
+        background-color: #ffffff !important;
+        padding: 8px !important;
+        border-radius: 6px !important;
+        border: 1px solid #ced4da !important;
+        margin-bottom: 12px !important;
     }
 
-    /* Prediction output */
+    /* Prediction output styling */
     .stMarkdown div {
-        background-color: #e7f1ff;  /* soft blue highlight */
-        padding: 15px;
-        border-radius: 8px;
+        background-color: #e3f2fd;  /* soft blue highlight */
+        padding: 20px;
+        border-radius: 10px;
         margin-top: 20px;
         font-weight: bold;
-        font-size: 18px;
-        border: 1px solid #0d6efd;
+        font-size: 20px;
+        border: 1px solid #1a73e8;
+        text-align: center;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+# --- App content ---
 st.title("Random Forest Predictor")
 
-st.markdown("### Select categorical values:")
+st.subheader("Select categorical values:")
 
 # --- Collect categorical inputs ---
 user_data = {}
@@ -91,7 +91,7 @@ for cat_col, options in categorical_options.items():
     choice = st.selectbox(f"{cat_col}", options)
     user_data[cat_col] = choice
 
-st.markdown("### Enter numeric features:")
+st.subheader("Enter numeric features:")
 
 # --- Identify numeric features ---
 numeric_features = [f for f in features if all(not f.startswith(cat + "_") for cat in categorical_options.keys())]
@@ -100,9 +100,9 @@ for num_feat in numeric_features:
     val = st.number_input(f"{num_feat}", value=0.0)
     numeric_input[num_feat] = val
 
-# --- Build input DataFrame matching model features ---
+# --- Build input DataFrame ---
 input_df = pd.DataFrame(columns=features)
-input_df.loc[0] = 0  # initialize all zeros
+input_df.loc[0] = 0
 
 # Set categorical selections
 for cat_col, choice in user_data.items():

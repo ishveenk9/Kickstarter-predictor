@@ -1,0 +1,20 @@
+import streamlit as st
+import pandas as pd
+
+st.title("Feature Explanation")
+
+st.markdown("""
+Here we explain all the features used in the Random Forest model:
+""")
+
+# Example of showing feature explanations
+feature_info = {
+    "Age": "Age of the individual in years.",
+    "Salary": "Monthly salary in USD.",
+    "Department_Sales": "Binary indicator if the person is in Sales.",
+    "Department_IT": "Binary indicator if the person is in IT.",
+    # Add all your features here
+}
+
+for feat, desc in feature_info.items():
+    st.markdown(f"**{feat}**: {desc}")
