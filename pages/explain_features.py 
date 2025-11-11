@@ -25,6 +25,7 @@ st.markdown(
 )
 
 st.title("Feature Explanations")
+st.write("Here you can explain all the features of your model.")
 
 st.markdown("""
 Here you can explain all the features used in your Random Forest model.  
