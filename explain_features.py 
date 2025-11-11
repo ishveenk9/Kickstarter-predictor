@@ -1,28 +1,23 @@
 import streamlit as st
 
 # --- Custom CSS (same as Home) ---
-st.markdown(
-    """
-    <style>
-    body, .stApp {
-        background-color: #6699CC;
-        color: #000000 !important;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .stTitle h1, .stTitle h1 a {
-        color: #000000 !important;
-        text-decoration: none !important;
-        pointer-events: none !important;
-    }
-
-    label, div[data-testid="stMarkdownContainer"] p {
-        color: #000000 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<style>
+body, .stApp {
+    background-color: #6699CC;
+    color: #000000 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.stTitle h1, .stTitle h1 a {
+    color: #000000 !important;
+    text-decoration: none !important;
+    pointer-events: none !important;
+}
+label, div[data-testid="stMarkdownContainer"] p {
+    color: #000000 !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.title("Feature Explanations")
 
