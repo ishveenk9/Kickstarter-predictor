@@ -1,9 +1,13 @@
+# This file deals with the main page of the application. It extracts in the features from the trained model that is saved using pickle. As well as it uses what is 
+# saved in the pickle file to predict the success of new samples. 
+
+# Necessary packages
 import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
 
-# --- Load model ---
+# Loading in the model
 with open("model_full.pkl", "rb") as f:
     data = pickle.load(f)
 
@@ -13,7 +17,7 @@ le = data["label_encoder"]
 features = data["features"]
 categorical_options = data["categorical_options"]
 
-# --- Custom CSS ---
+# CSS to style the home page of the website
 st.markdown(
     """
     <style>
@@ -75,38 +79,38 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Title ---
-st.title("Random Forest Predictor")
+# Title
+st.title("Kickstarter Success Predictor")
 
-# --- Collect categorical inputs ---
+# Gets the categorical variables 
 user_data = {}
 for cat_col, options in categorical_options.items():
     user_data[cat_col] = st.selectbox(f"{cat_col}", options)
 
-# --- Collect numeric inputs ---
+# Getting all the numerical fields 
 numeric_features = [f for f in features if all(not f.startswith(cat + "_") for cat in categorical_options.keys())]
 numeric_input = {}
 for num_feat in numeric_features:
     numeric_input[num_feat] = st.number_input(f"{num_feat}", value=0.0)
 
-# --- Build input DataFrame matching model features ---
+# makes an input datafrme with the features 
 input_df = pd.DataFrame(columns=features)
 input_df.loc[0] = 0  
 
-# Set categorical selections
+# Sets all the categorical inputs  
 for cat_col, choice in user_data.items():
     col_name = f"{cat_col}_{choice}"
     if col_name in input_df.columns:
         input_df.at[0, col_name] = 1
 
-# Set numeric inputs
+# Set all the numeric inputs
 for num_feat, val in numeric_input.items():
     input_df.at[0, num_feat] = val
 
-# --- Scale features ---
+# scales all the features 
 user_input_scaled = scaler.transform(input_df)
 
-# --- Predict ---
+# Predicts when the button is pressed  
 if st.button("Predict"):
     pred = model.predict(user_input_scaled)
     pred_label = le.inverse_transform(pred)
