@@ -25,15 +25,10 @@ st.markdown(
 )
 
 st.title("Feature Explanations")
-st.write("Here you can explain all the features of your model.")
+st.write("These are all the descriptions of the input fields so you can predict the most accurate results for your project!.")
 
 st.markdown("""
-Here you can explain all the features used in your Random Forest model.  
-For example:
-
 - **Feature A**: Description of Feature A
 - **Feature B**: Description of Feature B
 - **Feature C**: Description of Feature C
-
-Add all features and their explanations here to help users understand the model.
 """)
