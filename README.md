@@ -38,4 +38,4 @@ pandas
 numpy
 pickle
 
-You can test it out for yourself [here.]([https://example.com](https://kickstarter-sucess-predictor.streamlit.app/?page=explain_features])
+You can test it out for yourself [here.](https://kickstarter-sucess-predictor.streamlit.app/?page=explain_features)
