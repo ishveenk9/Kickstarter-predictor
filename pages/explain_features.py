@@ -1,9 +1,9 @@
-# --- This file contains feature explanations so the users have a better idea of what each field means. Additionally, this page is a seprate tab from the --- #
-# --- home page which can see seen in the side navbar --- #
+# This file contains feature explanations so the users have a better idea of what each field means. Additionally, this page is a seprate tab from the 
+# home page which can see seen in the side navbar 
 
 import streamlit as st
 
-# --- Custom CSS thats is the same as Home page --- #
+# Custom CSS thats is the same as Home page
 st.markdown(
     """
     <style>
@@ -27,7 +27,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- All the text on the page --- #
+# All the text on the page 
 st.title("Feature Explanations")
 st.write("Here are all the input-field descriptions to help you generate the most accurate results for your project!")
 
