@@ -81,6 +81,16 @@ st.markdown(
 
 # Title
 st.title("Kickstarter Success Predictor")
+# add an image (maybe somethign regarding break through tech)
+
+# ADD A FEW SENTENCES OF WHAT THE RESULTS MEAN
+
+# see if I can remove decimal points 
+# goal in usd 
+# duration days 
+# dropdown for funded month with (1-12)
+# cover as a single statment about failure 
+# if failure then suggest some improvements for the future 
 
 # Gets the categorical variables 
 user_data = {}
