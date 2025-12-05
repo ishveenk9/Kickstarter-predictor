@@ -91,6 +91,7 @@ st.title("Kickstarter Success Predictor")
 # dropdown for funded month with (1-12)
 # cover as a single statment about failure 
 # if failure then suggest some improvements for the future 
+#dict to mp fields name to dataset frield names
 
 # Gets the categorical variables 
 user_data = {}
