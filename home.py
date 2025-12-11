@@ -34,15 +34,33 @@ field_name_map = {
 def rename_field(field):
     return field_name_map.get(field, field)
 
-if cat_col == "funded_month":
-    display_name = rename_field(cat_col)
+# NUMERIC INPUTS (integer only, including funded_month)
+numeric_features = [
+    f for f in features 
+    if all(not f.startswith(cat + "_") for cat in categorical_options.keys())
+]
 
-    month_choice = st.selectbox(
-        display_name,
-        list(range(1, 13)),  
-    )
+numeric_input = {}
 
-    user_data[cat_col] = month_choice
+for num_feat in numeric_features:
+    if num_feat == "funded_month":
+        numeric_value = st.number_input(
+            rename_field(num_feat),
+            min_value=1,
+            max_value=12,
+            value=1,
+            step=1,
+            format="%d"
+        )
+    else:
+        numeric_value = st.number_input(
+            rename_field(num_feat),
+            value=0,
+            step=1,
+            format="%d"
+        )
+    numeric_input[num_feat] = int(numeric_value)
+
 
 # Styling which will be changed later
 st.markdown(
