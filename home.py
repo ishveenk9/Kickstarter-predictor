@@ -68,7 +68,7 @@ st.markdown(
         transition: background-color 0.3s ease;
     }
     div.stButton > button:first-child:hover {
-        background-color: #1558b0;
+        background-color: #CCFFFF;
     }
 
     .prediction-box {
