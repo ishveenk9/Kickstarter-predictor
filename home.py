@@ -1,5 +1,6 @@
-# This file deals with the main page of the application. It extracts in the features from the trained model that is saved using pickle. As well as it uses what is 
-# saved in the pickle file to predict the success of new samples. 
+# This file deals with the main page of the application. It extracts in the features 
+# from the trained model that is saved using pickle. It also uses what is saved in 
+# the pickle file to predict the success of new samples.
 
 # Necessary packages
 import streamlit as st
@@ -17,34 +18,62 @@ le = data["label_encoder"]
 features = data["features"]
 categorical_options = data["categorical_options"]
 
-# CSS to style the home page of the website
+# field name map
+field_name_map = {
+    "state": "State",
+    "category": "Project Category",
+    "subcategory": "Project Subcategory",
+    "goal": "Goal (USD)",
+    "levels": "Number of Donation Tiers",
+    "updates": "Number of Updates",
+    "comments": "Number of Comments",
+    "duration_days": "Duration (Days)",
+    "funded_month": "Funding Month (ex. February: 02)"
+}
+
+def rename_field(field):
+    return field_name_map.get(field, field)
+
+# month drop down map
+month_map = {
+    "January": "01",
+    "February": "02",
+    "March": "03",
+    "April": "04",
+    "May": "05",
+    "June": "06",
+    "July": "07",
+    "August": "08",
+    "September": "09",
+    "October": "10",
+    "November": "11",
+    "December": "12",
+}
+
+# Styling which will be changed later
 st.markdown(
     """
     <style>
     body, .stApp {
-        background-color: #6699CC;  /* light blue */
+        background-color: #6699CC;
         color: #000000 !important;  
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Force title to black */
     .stTitle h1 {
         color: #000000 !important;
         text-decoration: none !important;
         pointer-events: none !important;
     }
 
-    /* Remove random empty box under title */
     div[data-testid="stVerticalBlock"] > div:first-child:empty {
         display: none;
     }
 
-    /* Input container styling */
     .stNumberInput, .stSelectbox, .stTextInput {
         color: #000000;  
     }
 
-    /* Button styling */
     div.stButton > button:first-child {
         background-color: #1a73e8;
         color: #ffffff;
@@ -58,7 +87,6 @@ st.markdown(
         background-color: #1558b0;
     }
 
-    /* Prediction output box */
     .prediction-box {
         background-color: #ffffff;
         padding: 20px;
@@ -81,48 +109,60 @@ st.markdown(
 
 # Title
 st.title("Kickstarter Success Predictor")
-# add an image (maybe somethign regarding break through tech)
 
-# ADD A FEW SENTENCES OF WHAT THE RESULTS MEAN
-
-# see if I can remove decimal points 
-# goal in usd 
-# duration days 
-# dropdown for funded month with (1-12)
-# cover as a single statment about failure 
-# if failure then suggest some improvements for the future 
-#dict to mp fields name to dataset frield names
-
-# Gets the categorical variables 
+# categorical variables
 user_data = {}
+
 for cat_col, options in categorical_options.items():
-    user_data[cat_col] = st.selectbox(f"{cat_col}", options)
+    if cat_col == "funded_month":
+        choice = st.selectbox(
+            rename_field(cat_col),
+            list(month_map.keys())
+        )
+        user_data[cat_col] = month_map[choice]
 
-# Getting all the numerical fields 
-numeric_features = [f for f in features if all(not f.startswith(cat + "_") for cat in categorical_options.keys())]
+    else:
+        user_data[cat_col] = st.selectbox(
+            rename_field(cat_col),
+            options
+        )
+
+# Numeric fields all which are now integers 
+numeric_features = [
+    f for f in features 
+    if all(not f.startswith(cat + "_") for cat in categorical_options.keys())
+]
+
 numeric_input = {}
+
 for num_feat in numeric_features:
-    numeric_input[num_feat] = st.number_input(f"{num_feat}", value=0.0)
+    numeric_value = st.number_input(
+        rename_field(num_feat),
+        value=0,
+        step=1,
+        format="%d"
+    )
+    numeric_input[num_feat] = int(numeric_value)
 
-# makes an input datafrme with the features 
 input_df = pd.DataFrame(columns=features)
-input_df.loc[0] = 0  
+input_df.loc[0] = 0
 
-# Sets all the categorical inputs  
 for cat_col, choice in user_data.items():
     col_name = f"{cat_col}_{choice}"
     if col_name in input_df.columns:
         input_df.at[0, col_name] = 1
 
-# Set all the numeric inputs
 for num_feat, val in numeric_input.items():
-    input_df.at[0, num_feat] = val
+    input_df.at[0, num_feat] = int(val)
 
-# scales all the features 
 user_input_scaled = scaler.transform(input_df)
 
-# Predicts when the button is pressed  
+# prediction button
 if st.button("Predict"):
     pred = model.predict(user_input_scaled)
     pred_label = le.inverse_transform(pred)
-    st.markdown(f'<div class="prediction-box">Predicted class: {pred_label[0]}</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        f'<div class="prediction-box">Predicted class: {pred_label[0]}</div>',
+        unsafe_allow_html=True
+    )
