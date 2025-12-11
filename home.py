@@ -34,30 +34,6 @@ field_name_map = {
 def rename_field(field):
     return field_name_map.get(field, field)
 
-# month drop down map
-if cat_col == "funded_month":
-    display_name = rename_field(cat_col)
-
-    month_map = {
-        "January": 1,
-        "February": 2,
-        "March": 3,
-        "April": 4,
-        "May": 5,
-        "June": 6,
-        "July": 7,
-        "August": 8,
-        "September": 9,
-        "October": 10,
-        "November": 11,
-        "December": 12,
-    }
-
-month_choice = st.selectbox(display_name, list(month_map.keys()))
-
-user_data[cat_col] = month_map[month_choice]
-
-
 # Styling which will be changed later
 st.markdown(
     """
