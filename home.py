@@ -27,7 +27,7 @@ field_name_map = {
     "levels": "Number of Donation Tiers",
     "updates": "Number of Updates",
     "comments": "Number of Comments",
-    "duration_days": "Duration (Days)",
+    "duration": "Duration (Days)",
     "funded_month": "Funding Month (ex. February: 02)"
 }
 
