@@ -94,6 +94,9 @@ st.markdown(
 # Title
 st.title("Kickstarter Success Predictor 💵")
 
+# Description 
+st.write("Enter your project details and get an instant success prediction, powered by our model with 84% accuracy!")
+
 # categorical variables
 user_data = {}
 
