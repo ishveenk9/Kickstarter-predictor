@@ -92,10 +92,15 @@ st.markdown(
 )
 
 # logo
-st.image(
-    "logo.png",       
-    width=200          
+st.markdown(
+    """
+    <div style='text-align: center;'>
+        <img src='logo.png' width='150'>
+    </div>
+    """,
+    unsafe_allow_html=True
 )
+
 
 # Title
 st.title("Kickstarter Success Predictor")
