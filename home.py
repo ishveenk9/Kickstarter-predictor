@@ -34,6 +34,16 @@ field_name_map = {
 def rename_field(field):
     return field_name_map.get(field, field)
 
+if cat_col == "funded_month":
+    display_name = rename_field(cat_col)
+
+    month_choice = st.selectbox(
+        display_name,
+        list(range(1, 13)),  
+    )
+
+    user_data[cat_col] = month_choice
+
 # Styling which will be changed later
 st.markdown(
     """
