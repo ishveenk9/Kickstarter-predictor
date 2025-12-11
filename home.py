@@ -91,6 +91,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# logo
+st.image(
+    "/logo.png",       
+    width=200          
+)
+
 # Title
 st.title("Kickstarter Success Predictor")
 
