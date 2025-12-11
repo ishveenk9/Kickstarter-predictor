@@ -59,7 +59,7 @@ st.markdown(
     }
 
     div.stButton > button:first-child {
-        background-color: #1a73e8;
+        background-color: #FFD300;
         color: #ffffff;
         font-size: 16px;
         padding: 12px 25px;
