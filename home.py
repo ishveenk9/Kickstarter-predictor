@@ -93,7 +93,7 @@ st.markdown(
 
 # logo
 st.image(
-    "/logo.png",       
+    "logo.png",       
     width=200          
 )
 
